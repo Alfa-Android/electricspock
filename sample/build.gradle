@@ -19,39 +19,25 @@ apply plugin: 'com.android.application'
 apply plugin: 'groovyx.android'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "hkhc.electricspock.sample"
-        minSdkVersion 14
-        targetSdkVersion 24
+        minSdkVersion 21
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     packagingOptions {
         exclude 'META-INF/LICENSE'
-    }
-    testOptions {
-        unitTests.all {
-            // All the usual Gradle options.
-            testLogging {
-                events "passed", "skipped", "failed", "standardOut", "standardError"
-                outputs.upToDateWhen {false}
-                showStandardStreams = true
-            }
-        }
+        exclude 'META-INF/services/org.spockframework.runtime.extension.IGlobalExtension'
+        exclude 'META-INF/services/org.codehaus.groovy.runtime.ExtensionModule'
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     testOptions {
@@ -61,30 +47,17 @@ android {
     }
 }
 
-// Needed for pre-AGP 3.0 only
-//sourceSets {
-//    test {
-//        // Class.getResource won't work in unit test without this line.
-//        // It ensure the test resources are in the same directory as classes
-//        output.resourcesDir = "build/classes/test"
-//    }
-//}
-
-
 dependencies {
     implementation 'com.google.android.gms:play-services-ads:12.0.1'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0')
+    implementation 'androidx.appcompat:appcompat:1.0.0'
 
     testImplementation 'junit:junit:4.12'
 
     testImplementation project(':electricspock-electricspock')
-    testImplementation 'org.robolectric:robolectric:3.8'
-    testImplementation 'org.robolectric:shadows-support-v4:3.4-rc2'
-    testImplementation 'org.codehaus.groovy:groovy-all:2.4.13'
-    testImplementation 'org.spockframework:spock-core:1.1-groovy-2.4'
+    testImplementation 'org.robolectric:robolectric:4.4'
+    testImplementation 'org.codehaus.groovy:groovy-all:2.5.9'
+    testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
 
     testImplementation( 'com.athaydes:spock-reports:1.3.2' ) {
         transitive = false // this avoids affecting your version of Groovy/Spock

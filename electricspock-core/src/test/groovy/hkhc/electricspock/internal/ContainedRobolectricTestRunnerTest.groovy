@@ -19,15 +19,11 @@ package hkhc.electricspock.internal
 
 import hkhc.electricspock.ElectricSpecification
 import hkhc.electricspock.sample.BasicSpec
-import hkhc.electricspock.sample.ConfigAnnotatedSpec1
-import hkhc.electricspock.sample.ConfigAnnotatedSpec2
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runners.model.FrameworkMethod
-import org.robolectric.annotation.Config
-import org.robolectric.internal.SdkEnvironment
 import org.robolectric.internal.bytecode.InstrumentationConfiguration
+import org.robolectric.internal.bytecode.Sandbox
 
 import java.lang.reflect.Method
 
@@ -62,10 +58,10 @@ class ContainedRobolectricTestRunnerTest {
     void "getContainedSdkEnvironment shall return non-null object"() throws Exception {
 
         // when
-        SdkEnvironment sdkEnv = runner.getContainedSdkEnvironment()
+        Sandbox sandbox = runner.getContainedSdkEnvironment()
 
         // then
-        assertThat sdkEnv isNotNull()
+        assertThat sandbox isNotNull()
 
     }
 
@@ -73,10 +69,10 @@ class ContainedRobolectricTestRunnerTest {
     void "SdkEnvironment.getBootstrap shall return a class object with different class loader"() {
 
         // given
-        SdkEnvironment sdkEnv = runner.getContainedSdkEnvironment()
+        Sandbox sandbox = runner.getContainedSdkEnvironment()
 
         // when
-        Class c = sdkEnv.bootstrappedClass(ElectricSpecification)
+        Class c = sandbox.bootstrappedClass(ElectricSpecification)
 
         // then
         assertThat c.getName() isEqualTo ElectricSpecification.getName()
@@ -94,36 +90,6 @@ class ContainedRobolectricTestRunnerTest {
         // then
         assertThat config.shouldAcquire(ContainedRobolectricTestRunner.name) isFalse()
 
-    }
-
-    @Test
-    void "it shall recognize @Config annotation at class"() {
-
-        Config config = null
-
-        // given
-        runner = new ContainedRobolectricTestRunner(ConfigAnnotatedSpec1)
-        config = runner.getConfig(ConfigAnnotatedSpec1.getMethod("placeholder"))
-
-        // then
-        assertThat config.manifest isEqualTo Config.NONE
-        assertThat config.packageName isEqualTo ""
-
-
-        // given
-        runner = new ContainedRobolectricTestRunner(ConfigAnnotatedSpec2)
-        config = runner.getConfig(ConfigAnnotatedSpec2.getMethod("placeholder"))
-
-        // then
-        assertThat config.manifest isEqualTo Config.DEFAULT_MANIFEST_NAME
-        assertThat config.packageName isEqualTo "hkhc.testpackage"
-
-    }
-
-    @Test
-    @Ignore
-    void "it shall recognize @Config annotation at method"() {
-        fail("to be implemented")
     }
 
     @Test

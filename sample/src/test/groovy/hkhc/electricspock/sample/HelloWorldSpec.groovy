@@ -20,7 +20,11 @@ package hkhc.electricspock.sample
 import android.util.Log
 import hkhc.electricspock.ElectricSpecification
 import org.robolectric.Robolectric
-import spock.lang.*
+import spock.lang.Ignore
+import spock.lang.Issue
+import spock.lang.Narrative
+import spock.lang.Title
+import spock.lang.Unroll
 
 /**
  * Created by herman on 27/12/2016.

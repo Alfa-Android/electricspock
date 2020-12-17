@@ -22,26 +22,24 @@ apply plugin: 'maven'
 artifactId='electricspock'
 group='hkhc.electricspock'
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
 
 def coreProject = 'electricspock-core'
 
+sourceSets {
+    main.groovy.outputDir = sourceSets.main.java.outputDir
+    test.groovy.outputDir = sourceSets.test.java.outputDir
+}
+
 dependencies {
+    implementation 'org.codehaus.groovy:groovy-all:2.5.9'
+    implementation 'org.spockframework:spock-core:1.3-groovy-2.5'
 
-    // Workaround for issue https://issuetracker.google.com/issues/65712492
-    // regarding to "Class not found .... Empty test suite" issue
-    testRuntimeOnly files("build/classes/groovy/test")
-    testRuntimeOnly files("build/classes/groovy/main")
+    implementation 'cglib:cglib-nodep:3.3.0'
+    implementation 'org.jetbrains:annotations-java5:20.1.0'
 
-    api 'org.codehaus.groovy:groovy-all:2.4.13'
-    api "org.spockframework:spock-core:1.1-groovy-2.4"
-
-    implementation 'cglib:cglib-nodep:3.2.4'
-    implementation 'org.jetbrains:annotations-java5:15.0'
-    implementation 'junit:junit:4.12'
-
-    api project(':electricspock-core')
+    implementation project(':electricspock-core')
 
 }
 

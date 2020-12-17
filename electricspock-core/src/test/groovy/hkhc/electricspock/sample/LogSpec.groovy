@@ -22,7 +22,6 @@ import org.robolectric.annotation.Config;
 /**
  * Created by herman on 28/12/2016.
  */
-@Config(manifest=Config.NONE)
 class LogSpec extends ElectricSpecification {
 
     def "Run Log without error"() {

@@ -65,6 +65,7 @@ public class ElectricSpockInterceptor extends AbstractMethodInterceptor {
         } finally {
             try {
                 containedTestRunner.containedAfterTest();
+                containedTestRunner.containedFinallyAfterTest();
             } finally {
                 Thread.currentThread().setContextClassLoader(ElectricSputnik.class.getClassLoader());
             }

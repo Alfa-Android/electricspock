@@ -32,7 +32,6 @@ import static hkhc.electricspock.runner.SpecUtils.getSpecClasses
  * Created by herman on 16/1/2017.
  */
 @Title("find all Specification inner classes")
-@TypeChecked
 class GetSpecClassesSpec extends Specification {
 
     def "Class without inner Specfication class"() {
